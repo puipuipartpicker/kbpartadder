@@ -1,5 +1,3 @@
-"use strict";
-
 const displayButtons = current_url => {
   document.querySelectorAll('.grid-view-item__image-container')
     .forEach(e => {
@@ -9,8 +7,8 @@ const displayButtons = current_url => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          vendor_url: current_url,
-          product_name: e.innerText
+          vendor_url: current_url.replace(/\?.+/, ''),
+          product_url: e.getAttribute("href")
         })
       })
         .then(response => response.json())
