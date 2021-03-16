@@ -9,8 +9,8 @@ const displayButtons = current_url => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          "vendor_url": current_url,
-          "product_name": e.innerText
+          vendor_url: current_url,
+          product_name: e.innerText
         })
       })
         .then(response => response.json())
