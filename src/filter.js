@@ -1,8 +1,34 @@
 "use strict";
 
-const displayButtons = () => {
+const displayButtons = current_url => {
   document.querySelectorAll('.grid-view-item__image-container')
-    .forEach(e => e.style.border = "2px solid red")
+    .forEach(e => {
+      fetch('http://kbpartpicker-api-dev.herokuapp.com/products/get_product', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          "vendor_url": current_url,
+          "product_name": e.innerText
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
+          switch(data.status) {
+            case "Not Supported":
+              e.style.border = "2px solid black"
+              break;
+            case "Not Found":
+              e.style.border = "2px solid red"
+              break;
+            case "Found":
+              e.style.border = "2px solid green"
+              break;
+          }
+        })
+        .catch(error => console.log(error));
+    })
 };
 
 const addCDNs = () => {
@@ -16,10 +42,10 @@ const addCDNs = () => {
   );
 };
 
-const activate = on => {
-  if (on) {
+const activate = ({ activate, current_url }) => {
+  if (activate) {
     addCDNs();
-    displayButtons();
+    displayButtons(current_url);
   } else {
     return
   }
@@ -30,7 +56,7 @@ chrome.runtime.onConnect.addListener((port) => {
     chrome.storage.local.set({
       activated: msg.activate
     })
-    activate(msg.activate);
+    activate(msg);
   });
   window.addEventListener('beforeunload', () => {
     chrome.storage.local.set({

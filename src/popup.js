@@ -11,7 +11,10 @@ const connect = () => {
   chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
     const port = chrome.tabs.connect(tabs[0].id, {name: "activate"});
     activate.onclick = () => {
-      port.postMessage({activate: activate.checked})
+      port.postMessage({
+        activate: activate.checked,
+        current_url: tabs[0].url
+      })
     }
     port.onMessage.addListener((msg) => {
       if (msg.refreshed) {
