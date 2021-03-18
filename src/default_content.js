@@ -7,7 +7,7 @@ const displayButtons = current_url => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          vendor_url: current_url.replace(/\?.+/, ''),
+          vendor_url: current_url.replace(/\?.+/, ''),  // remove parameters
           product_url: e.getAttribute("href")
         })
       })

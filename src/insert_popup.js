@@ -1,7 +1,16 @@
 window.addEventListener('load', (event) => {
-  chrome.tabs.executeScript(null, {
-    file: 'src/filter.js', }, () => {
-      connect()
+//   chrome.tabs.executeScript(null, {
+//     file: 'src/insert_content.js', }, () => {
+//       connect()
+//   });
+
+  chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+    if (tabs[0].url.includes('novelkeys')) {
+      chrome.tabs.executeScript(null, {
+        file: 'src/insert_novelkeys.js', }, () => {
+          connect()
+      });
+    }
   });
 });
 

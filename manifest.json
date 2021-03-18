@@ -13,7 +13,7 @@
 
 	"content_scripts": [
 		{
-			"js": ["src/filter.js"],
+			"js": ["src/default_content.js"],
 			"css": ["static/filter.css"],
 			"matches": [
 				"https://novelkeys.xyz/*"
@@ -22,7 +22,7 @@
 		}
 	],
 
-  "web_accessible_resources": ["src/filter.js"],
+  "web_accessible_resources": ["src/default_content.js"],
 
 	"page_action": {
 		"default_title": "KBPartAdder",
